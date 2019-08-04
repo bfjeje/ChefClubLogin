@@ -36,48 +36,52 @@ public class LoginAttempt {
 
     public void tryToLogIn(final String email, final String password){
 
-        Map<String, String> params = new HashMap<String, String>();
+        Map<String, String> params = new HashMap<>();
         params.put("password", password);
         params.put("email", email);
 
-
         JSONObject jsonObj = new JSONObject(params);
-        Toast.makeText(context, params.toString(), Toast.LENGTH_LONG).show();
 
         final JsonObjectRequest json = new JsonObjectRequest(
                 Request.Method.POST, url, jsonObj,
                 new Response.Listener<JSONObject>() {
                     @Override
                     public void onResponse(JSONObject response) {
-                        Toast.makeText(context, "hola", Toast.LENGTH_LONG).show();
                         User userReturned = parseResponse(response);
-                        showUserMessage(userReturned);
+                        showSuccessMessage(userReturned);
                     }
                 }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
-                Toast.makeText(context,
-                        "The status code is: " + error.networkResponse.statusCode,
-                        Toast.LENGTH_LONG).show();
+                showUnsuccessMessage();
             }
         }
         );
-
         queue.add(json);
     }
 
-    private void showUserMessage(User userReturned) {
+    private void showSuccessMessage(User userReturned) {
 
         //In this case we do nothing, but if we want, we could pass the User to the next activity
-        Toast.makeText(context,
-                "hello",
-                Toast.LENGTH_LONG).show();
         new AlertDialog.Builder(context)
                 .setTitle("ChefsClub")
                 .setMessage("Login efetuado com sucesso!")
-                .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
+                .setPositiveButton("FEITO", new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int which) {
-                        // Continue with delete operation
+                        //Do nothing for now.
+                    }
+                })
+                .show();
+    }
+
+    private void showUnsuccessMessage() {
+
+        new AlertDialog.Builder(context)
+                .setTitle("ChefsClub")
+                .setMessage("Email ou senha invalidos!\n\n Por algum acaso esqueceu a sua senha?")
+                .setPositiveButton("TENTAR NOVAMENTE", new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int which) {
+                        //Do nothing for now.
                     }
                 })
                 .show();
@@ -86,7 +90,6 @@ public class LoginAttempt {
     private User parseResponse(JSONObject response) {
 
         try {
-
             String name = response.getString("name");
             String email = response.getString("email");
 
@@ -95,7 +98,6 @@ public class LoginAttempt {
             return user;
 
         } catch (JSONException err) {
-            // Error occurred!
             Toast.makeText(context, "Json error: " + err.getMessage(),Toast.LENGTH_LONG).show();
             return null;
         }
