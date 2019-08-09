@@ -29,11 +29,13 @@ public class LoginAttempt {
     private Context context;
     protected RequestQueue queue;
 
+    //starts the login attempt
     public LoginAttempt(Context context) {
         this.context = context;
         queue = Volley.newRequestQueue(context);
     }
 
+    //receive email and password, and starts queue action
     public void tryToLogIn(final String email, final String password){
 
         Map<String, String> params = new HashMap<>();
@@ -60,6 +62,7 @@ public class LoginAttempt {
         queue.add(json);
     }
 
+    //If everything is ok, it shows a successful message
     private void showSuccessMessage(User userReturned) {
 
         //In this case we do nothing, but if we want, we could pass the User to the next activity
@@ -74,6 +77,7 @@ public class LoginAttempt {
                 .show();
     }
 
+    //if something is wrong, it shows an unsuccessful message
     private void showUnsuccessMessage() {
 
         new AlertDialog.Builder(context)
@@ -87,8 +91,8 @@ public class LoginAttempt {
                 .show();
     }
 
+    //parse the message received
     private User parseResponse(JSONObject response) {
-
         try {
             String name = response.getString("name");
             String email = response.getString("email");
@@ -96,7 +100,6 @@ public class LoginAttempt {
             User user = new User(name, email);
 
             return user;
-
         } catch (JSONException err) {
             Toast.makeText(context, "Json error: " + err.getMessage(),Toast.LENGTH_LONG).show();
             return null;

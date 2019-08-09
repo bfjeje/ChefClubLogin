@@ -29,6 +29,7 @@ public class MainActivity extends AppCompatActivity {
         textViewForgotPassword = findViewById(R.id.textViewForgotPassword);
         textViewRegister = findViewById(R.id.textViewRegister);
 
+        //Clicked on Forgot password button
         textViewForgotPassword.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -36,6 +37,7 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
+        //Clicked on Register button
         textViewRegister.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -43,6 +45,7 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
+        //Clicked on Enter button
         buttonEnter.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -54,6 +57,7 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
+    //method that checks if all fields are filled, and check if password is more than 8 characters
     private boolean checkIfFieldsFilled() {
         if(TextUtils.isEmpty(editTextPassword.getText().toString()) || TextUtils.isEmpty(editTextEmail.getText().toString())){
             Toast.makeText(getApplicationContext(),"Please, fill all fields", Toast.LENGTH_LONG).show();
@@ -66,6 +70,7 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
+    //starts the login task
     private void callTryToLogin(String email, String password){
         LoginAttempt la = new LoginAttempt(this);
         la.tryToLogIn(email, password);
