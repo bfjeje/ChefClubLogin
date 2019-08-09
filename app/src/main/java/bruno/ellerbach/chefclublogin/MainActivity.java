@@ -15,7 +15,8 @@ import bruno.ellerbach.chefclublogin.API.LoginAttempt;
 public class MainActivity extends AppCompatActivity {
 
     Button buttonEnter;
-    EditText editTextEmail, editTextPassword;
+    static EditText editTextEmail;
+    static EditText editTextPassword;
     TextView textViewForgotPassword, textViewRegister;
 
     @Override
@@ -74,5 +75,10 @@ public class MainActivity extends AppCompatActivity {
     private void callTryToLogin(String email, String password){
         LoginAttempt la = new LoginAttempt(this);
         la.tryToLogIn(email, password);
+    }
+
+    public static void clearFields(){
+        editTextEmail.setText("");
+        editTextPassword.setText("");
     }
 }

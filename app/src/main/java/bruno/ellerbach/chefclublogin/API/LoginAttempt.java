@@ -1,5 +1,6 @@
 package bruno.ellerbach.chefclublogin.API;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.widget.Toast;
@@ -19,11 +20,13 @@ import org.json.JSONObject;
 import java.util.HashMap;
 import java.util.Map;
 
+import bruno.ellerbach.chefclublogin.MainActivity;
 import bruno.ellerbach.chefclublogin.model.User;
 
 import static bruno.ellerbach.chefclublogin.common.Constants.*;
 
 public class LoginAttempt {
+
 
     private String url = BASE_URL + API_URL;
     private Context context;
@@ -56,6 +59,7 @@ public class LoginAttempt {
             @Override
             public void onErrorResponse(VolleyError error) {
                 showUnsuccessMessage();
+                MainActivity.clearFields();
             }
         }
         );
